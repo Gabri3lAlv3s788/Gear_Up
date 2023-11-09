@@ -1,0 +1,51 @@
+int analogPin = 2; // Input from photoresistor connected to A0
+int analogPin2 = 15;
+int buzzerPin = 4; // Positive buzzer pin connected to pin 4
+int buzzerPin2 = 13;
+
+long max_frequency = 2500; // Max frequency for the buzzer
+
+long frequency; // The frequency to buzz the buzzer
+long frequency2;
+int readVal; // The input voltage read from photoresistor
+int readVal2;
+
+
+void setup() {
+    pinMode(buzzerPin, OUTPUT); // set a pin for buzzer output
+    pinMode(buzzerPin2, OUTPUT);
+}
+
+void loop() {
+    readVal = analogRead(analogPin); // Reads 0-1023
+    readVal2 = analogRead(analogPin2); // Reads 0-1023
+    frequency = (readVal * max_frequency) / 1023;
+    frequency2 = (readVal2 * max_frequency) / 1023;
+    
+    buzz(buzzerPin, frequency, 10);
+    buzz2(buzzerPin2, frequency2, 10);
+}
+
+void buzz(int targetPin, long frequency, long length) {
+    long delayValue = 1000000/frequency/2;
+    long numCycles = frequency * length/ 1000;
+
+    for (long i=0; i < numCycles; i++) {
+        digitalWrite(targetPin,HIGH);
+        delayMicroseconds(delayValue);
+        digitalWrite(targetPin,LOW);
+        delayMicroseconds(delayValue);
+    }
+}
+
+    void buzz2 (int targetPin2, long frequency2, long length2) {
+    long delayValue2 = 1000000/frequency2/2;
+    long numCycles2 = frequency2 * length2/ 1000;
+
+    for (long i=0; i < numCycles2; i++) {
+        digitalWrite(targetPin2,HIGH);
+        delayMicroseconds(delayValue2);
+        digitalWrite(targetPin2,LOW);
+        delayMicroseconds(delayValue2);
+    }
+  }
