@@ -1,0 +1,81 @@
+/***************************
+*
+*    Projeto 08 – Projeto Piano com Buzzer
+*            http://squids.com.br/arduino
+*
+***************************/
+
+const int botao1 = 15;
+const int botao2 = 18;
+const int botao3 = 19;
+const int botao4 = 21;
+const int botao5 = 4;
+const int botao6 = 21;
+const int botao7 = 23;
+const int som = 5;
+
+int estado_botao1 = 0;
+int estado_botao2 = 0;
+int estado_botao3 = 0;
+int estado_botao4 = 0;
+int estado_botao5 = 0;
+int estado_botao6 = 0;
+int estado_botao7 = 0;
+int tom = 0;
+
+
+void setup() {
+  // coloque seu código de setup aqui, para rodar uma vez: define saída e entrada do arduino
+
+  pinMode(som, OUTPUT);           // pino de saída do arduino
+  pinMode(botao1, INPUT_PULLUP);  //pino do botão é entrada
+  pinMode(botao2, INPUT_PULLUP);  //pino do botão é entrada
+  pinMode(botao3, INPUT_PULLUP);  //pino do botão é entrada
+  pinMode(botao4, INPUT_PULLUP);
+  pinMode(botao5, INPUT_PULLUP);
+  pinMode(botao6, INPUT_PULLUP);
+  pinMode(botao7, INPUT_PULLUP);
+}
+
+void loop() {
+  // coloque seu código principal aqui, para rodar repetidamente:
+
+  estado_botao1 = digitalRead(botao1);
+  estado_botao2 = digitalRead(botao2);
+  estado_botao3 = digitalRead(botao3);
+  estado_botao4 = digitalRead(botao4);
+  estado_botao5 = digitalRead(botao5);
+  estado_botao6 = digitalRead(botao6);
+  estado_botao7 = digitalRead(botao7);
+
+
+  if (estado_botao1 == 0) {
+    tom = 2500;
+  }
+  if (estado_botao2 == 0) {
+    tom = 1800;
+  }
+  if (estado_botao3 == 0) {
+    tom = 1250;
+  }
+  if (estado_botao4 == 0) {
+    tom = 1000;
+  }
+  if (estado_botao5 == 0) {
+    tom = 820;
+  }
+  if (estado_botao6 == 0) {
+    tom = 720;
+  }
+
+  if (estado_botao7 == 0) {
+    tom = 600;
+  }
+  if (tom > 0) {              //enquanto Tom for maior que zero faça o que esta descrit o baixo:
+    digitalWrite(som, HIGH);  // Liga buzzer
+    delayMicroseconds(tom);   // Espera o tempo proporcional ao comprimento de onda da nota musical em milisegundos
+    digitalWrite(som, LOW);   // Desliga buzzer
+    delayMicroseconds(tom);   // Espera o tempo proporcional ao comprimento de onda da nota musical em milisegundos
+    tom = 0;                  // Reseta o Tom para zero, para sair do loop while e nao tocar o som constantemente
+  }
+}
